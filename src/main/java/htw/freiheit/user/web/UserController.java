@@ -2,6 +2,7 @@ package htw.freiheit.user.web;
 
 import htw.freiheit.user.model.User;
 import htw.freiheit.user.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponse> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<UserResponse> register(@Valid @RequestBody RegisterRequest request) {
         User user = userService.register(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(UserResponse.from(user));
     }

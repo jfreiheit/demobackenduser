@@ -18,6 +18,13 @@ public class UserService {
     }
 
     public User register(RegisterRequest request) {
+        if (userRepository.existsByUsername(request.username())) {
+            throw new DuplicateUserException("Nutzername ist bereits vergeben");
+        }
+        if (userRepository.existsByEmail(request.email())) {
+            throw new DuplicateUserException("E-Mail-Adresse ist bereits registriert");
+        }
+
         User user = new User(
                 request.username(),
                 request.email(),
